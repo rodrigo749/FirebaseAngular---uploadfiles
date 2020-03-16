@@ -1,0 +1,34 @@
+<div class= "container">
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Select a file for upload</h5>
+      <input type="file" (change)="upload($event)" accept=".png,.jpg,.pdf" />
+
+
+      <div class="progress">
+       <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100">
+
+       </div>
+      </div>  
+      <br>
+
+      <div class="btn-group" role="group" *ngIf="uploadState | async; let state">
+          <button type="button" class="btn btn-primary" (click)="task.pause()" [disabled]="state === 'paused'">Pause</button>
+          <button type="button" class="btn btn-primary" (click)="task.cancel()" [disabled]="!(state === 'paused' || state === 'running')">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="task.resume()" [disabled]="state === 'running'">Resume</button>
+      </div>
+
+      <br><br>
+
+      <div *ngIf="downloadURL | async; let downloadURL" class="alert alert-info" role="alert"></div>    
+        File uploaded:  <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+
+    </div>
+  </div>
+
+
+
+</div>
